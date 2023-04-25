@@ -7,6 +7,7 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.1",
     "@hotwired/turbo-rails": "^7.3.0",
+    "@yarnpkg/pnpify": "^4.0.0-rc.42",
     "esbuild": "^0.17.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -15,5 +16,6 @@
   "devDependencies": {
     "@types/react": "^18.0.38",
     "@types/react-dom": "^18.0.11"
-  }
+  },
+  "packageManager": "yarn@3.5.0"
 }
