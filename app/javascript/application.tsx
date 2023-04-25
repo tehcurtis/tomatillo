@@ -6,28 +6,12 @@ import { useState, useEffect, useRef } from "react";
 
 interface FormProps {
   defaultQuestion: string;
-  onFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 // components
 
 const FormContainer = () => {
   const [defaultQuestion, setDefaultQuestion] = useState<string>();
-
-  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const csrf_token = document?.querySelector("meta[name='csrf-token']")?.getAttribute("content") || "no_csrf";
-    fetch("/questions/", {
-      method: "POST",
-      cache: "no-cache",
-      headers: {
-        'X-CSRF-Token': csrf_token,
-    }, })
-      .then((response) => {
-        // process response
-      });
-
-  };
 
   return (
     <>
@@ -36,17 +20,39 @@ const FormContainer = () => {
       </p>
       <QuestionForm
         defaultQuestion="What is The Minimalist Entrepreneur about?"
-        onFormSubmit={onFormSubmit}
       />
     </>
   );
 };
 
-const QuestionForm = ({ defaultQuestion, onFormSubmit }: FormProps) => {
+const QuestionForm = ({ defaultQuestion }: FormProps) => {
+  const questionRef = useRef<HTMLTextAreaElement>(null);
+
+  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // todo: do something if this isn't set
+    const csrf_token = document?.querySelector("meta[name='csrf-token']")?.getAttribute("content") || "no_csrf";
+    const requestOptions: RequestInit = {
+      method: "POST",
+      cache: "no-cache",
+      headers: {
+        'X-CSRF-Token': csrf_token,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'question=' + questionRef.current?.textContent
+    }
+
+    fetch("/questions/", requestOptions)
+      .then((response) => {
+        // process response
+      });
+  };
+
   return (
     <form onSubmit={( event ) => onFormSubmit(event)}>
       <textarea
         id="question"
+        ref={questionRef}
         name="question"
         defaultValue={ defaultQuestion }
       />
