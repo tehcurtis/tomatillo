@@ -72,6 +72,13 @@ GEM
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    cairo (1.17.8)
+      native-package-installer (>= 1.0.3)
+      pkg-config (>= 1.2.2)
+      red-colors
+    cairo-gobject (4.1.2)
+      cairo (>= 1.16.2)
+      glib2 (= 4.1.2)
     capybara (3.39.0)
       addressable
       matrix
@@ -88,9 +95,24 @@ GEM
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     erubi (1.12.0)
+    faraday (2.7.4)
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.0.2)
+    fiddle (1.1.1)
     foreman (0.87.2)
+    gio2 (4.1.2)
+      fiddle
+      gobject-introspection (= 4.1.2)
+    glib2 (4.1.2)
+      native-package-installer (>= 1.0.3)
+      pkg-config (>= 1.3.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    gobject-introspection (4.1.2)
+      glib2 (= 4.1.2)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -115,6 +137,8 @@ GEM
     mini_mime (1.1.2)
     minitest (5.18.0)
     msgpack (1.7.0)
+    multipart-post (2.3.0)
+    native-package-installer (1.1.5)
     net-imap (0.3.4)
       date
       net-protocol
@@ -127,9 +151,19 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.14.3-arm64-darwin)
       racc (~> 1.4)
+    numpy (0.4.0)
+      pycall (>= 1.2.0.beta1)
+    pandas (0.3.8)
+      numpy
+      pycall (>= 1.0.0)
+    pkg-config (1.5.1)
+    poppler (4.1.2)
+      cairo-gobject (= 4.1.2)
+      gio2 (= 4.1.2)
     public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
+    pycall (1.4.2)
     racc (1.6.2)
     rack (2.2.6.4)
     rack-test (2.1.0)
@@ -161,10 +195,16 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    red-colors (0.3.0)
+      matrix
     regexp_parser (2.8.0)
     reline (0.3.3)
       io-console (~> 0.5)
     rexml (3.2.5)
+    ruby-openai (4.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.9.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -182,6 +222,7 @@ GEM
       railties (>= 6.0.0)
     thor (1.2.1)
     timeout (0.3.2)
+    tokenizers (0.3.3-arm64-darwin)
     turbo-rails (1.4.0)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
@@ -215,12 +256,16 @@ DEPENDENCIES
   foreman (~> 0.87.2)
   jbuilder
   jsbundling-rails
+  pandas (~> 0.3.8)
+  poppler (~> 4.1.2)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  ruby-openai
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
+  tokenizers (~> 0.3.3)
   turbo-rails
   tzinfo-data
   web-console
