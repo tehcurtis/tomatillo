@@ -1,5 +1,4 @@
 require "poppler"
-require "pandas"
 require "debug"
 require "tokenizers"
 require "openai"
@@ -17,8 +16,6 @@ class CsvWriter
   end
 
   def write_csv
-    p 'hai'
-    return
     column_headers = ["Page ", "page content", "token count", *(0..4096).to_a]
     CSV.open(@output_filename, "wb") do |csv|
       csv << column_headers
