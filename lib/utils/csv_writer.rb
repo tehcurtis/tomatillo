@@ -15,7 +15,7 @@ class CsvWriter
   end
 
   def write_csv
-    column_headers = ["Page ", "page content", "token count", *(0..4096).to_a]
+    column_headers = ["Page", "page content", "token count", *(0..4096).to_a]
     CSV.open(@output_filename, "wb") do |csv|
       csv << column_headers
       build_rows.each do |row|
