@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+require "rubygems"
+require "optparse"
+require_relative "../lib/utils/csv_writer"
+
+options = {}
+option_parser = OptionParser.new do |opts|
+  opts.on '-p', '--pdf FILENAME', String, 'Name of PDF' do |pdf_name|
+    options[:pdf_name] = pdf_name
+  end
+end
+option_parser.parse!
+
+raise OptionParser::MissingArgument if options[:pdf_name].nil?
+
+writer = CsvWriter.new(options[:pdf_name])
+writer.write_csv
