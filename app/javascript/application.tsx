@@ -8,6 +8,16 @@ interface FormProps {
   defaultQuestion: string;
 }
 
+// fns
+
+const showText = (selector: string, text: string, index: number) => {
+  const element = document.querySelector(selector);
+  if (element && index < text.length) {
+    element.innerHTML += text[index];
+    setTimeout(() => showText(selector, text, index + 1), 60);
+  }
+};
+
 // components
 
 const FormContainer = () => {
@@ -28,6 +38,21 @@ const FormContainer = () => {
 const QuestionForm = ({ defaultQuestion }: FormProps) => {
   const questionRef = useRef<HTMLTextAreaElement>(null);
 
+  const [showButtonsContainer, setShowButtonsContainer] = React.useState(true)
+  const [answer, setAnswer] = React.useState(null)
+
+  useEffect(() => {
+    if (answer !== null) {
+      const answerElement = document.querySelector("#answer");
+      if (answerElement) {
+        answerElement.innerHTML = "";
+        setTimeout(() => {
+          showText("#answer", answer, 0);
+        }, 1200);
+      }
+    }
+  }, [answer]);
+
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // todo: do something if this isn't set
@@ -42,10 +67,10 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
       body: 'question=' + questionRef.current?.value
     }
 
-    fetch("/questions/", requestOptions)
-      .then((response) => {
-        // process response
-      });
+    fetch("/questions/", requestOptions).then(response => response.json()).then(json => {
+      setShowButtonsContainer(false);
+      setAnswer(json.question.answer);
+    });
   };
 
   return (
@@ -57,22 +82,26 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
         defaultValue={ defaultQuestion }
       />
 
-      <div className="buttons">
-        <button type="submit" id="ask-button">
-          Ask question
-        </button>
-        <button id="lucky-button" style={{ background: "#eee", borderColor: "#eee", color: "#444" }}>
-          I'm feeling lucky
-        </button>
-      </div>
+      { showButtonsContainer ?
+        <div className="buttons">
+          <button type="submit" id="ask-button">
+            Ask question
+          </button>
+          <button id="lucky-button" style={{ background: "#eee", borderColor: "#eee", color: "#444" }}>
+            I'm feeling lucky
+          </button>
+        </div>
+       : null
+      }
 
-      <p id="answer-container" className="hidden">
-        <strong>Answer:</strong>
-        <span id="answer">&nbsp;</span>
-        <button id="ask-another-button" style={{ display: "none" }}>
+      <p id="answer-container" className={`hidden${answer !== null ? ' showing' : ''}`}>
+        <strong>Answer: </strong>
+        <span id="answer">{ answer !== null ? answer : '\u00A0' }</span>
+        <button id="ask-another-button" style={{ display: answer !== null ? 'block' : 'none' }}>
           Ask another question
         </button>
       </p>
+
     </form>
   );
 };
