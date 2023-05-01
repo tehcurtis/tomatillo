@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
     params.require(:question)
 
     previous_question = Question.where(question: params[:question]).order(:created_at, :desc).first
-    if previous_question.answer.present? && previous_question&.audio_src_url&.present?
+    if previous_question&.answer&.present? && previous_question&.audio_src_url&.present?
       p "////// previously asked and answered"
       p previous_question
       previous_question.update(ask_count: previous_question.ask_count += 1)

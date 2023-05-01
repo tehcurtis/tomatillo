@@ -39,7 +39,7 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
         'X-CSRF-Token': csrf_token,
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: 'question=' + questionRef.current?.textContent
+      body: 'question=' + questionRef.current?.value
     }
 
     fetch("/questions/", requestOptions)
