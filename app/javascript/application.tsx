@@ -39,6 +39,7 @@ const FormContainer = () => {
 
 const QuestionForm = ({ defaultQuestion }: FormProps) => {
   const questionRef = useRef<HTMLTextAreaElement>(null);
+  const askQuestionButtonRef = useRef<HTMLButtonElement>(null);
 
   const [showButtonsContainer, setShowButtonsContainer] = React.useState(true)
   const [answer, setAnswer] = React.useState(null)
@@ -62,6 +63,12 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
     if (currentQuestionText?.trim() === "") {
       alert("Please ask a question!");
       return false;
+    }
+
+    const askQuestionButton = askQuestionButtonRef.current
+    if (askQuestionButton) {
+      askQuestionButton.textContent = "Asking...";
+      askQuestionButton.disabled = true;
     }
 
     // todo: do something if this isn't set
@@ -93,7 +100,7 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
 
       { showButtonsContainer ?
         <div className="buttons">
-          <button type="submit" id="ask-button">
+          <button type="submit" id="ask-button" ref={askQuestionButtonRef}>
             Ask question
           </button>
           <button id="lucky-button" style={{ background: "#eee", borderColor: "#eee", color: "#444" }}>
