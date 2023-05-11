@@ -9,12 +9,14 @@ interface FormProps {
 }
 
 // fns
+const randomInteger = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const showText = (selector: string, text: string, index: number) => {
   const element = document.querySelector(selector);
   if (element && index < text.length) {
+    const interval = randomInteger(30, 70);
     element.innerHTML += text[index];
-    setTimeout(() => showText(selector, text, index + 1), 60);
+    setTimeout(() => showText(selector, text, index + 1), interval);
   }
 };
 
