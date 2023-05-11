@@ -57,6 +57,13 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const currentQuestionText = questionRef.current?.value;
+    if (currentQuestionText?.trim() === "") {
+      alert("Please ask a question!");
+      return false;
+    }
+
     // todo: do something if this isn't set
     const csrf_token = document?.querySelector("meta[name='csrf-token']")?.getAttribute("content") || "no_csrf";
     const requestOptions: RequestInit = {
@@ -66,7 +73,7 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
         'X-CSRF-Token': csrf_token,
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: 'question=' + questionRef.current?.value
+      body: 'question=' + currentQuestionText
     }
 
     fetch("/questions/", requestOptions).then(response => response.json()).then(json => {
