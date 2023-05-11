@@ -44,6 +44,20 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
   const [showButtonsContainer, setShowButtonsContainer] = React.useState(true)
   const [answer, setAnswer] = React.useState(null)
 
+  const handleLuckyButtonClick = () => {
+    var options = [
+      "What is a minimalist entrepreneur?",
+      "What is your definition of community?",
+      "How do I decide what kind of business I should start?"
+    ],
+      random = ~~(Math.random() * options.length);
+
+    const questionElement = questionRef.current
+    if (questionElement) {
+      questionElement.value = options[random];
+    };
+  }
+
   useEffect(() => {
     if (answer !== null) {
       const answerElement = document.querySelector("#answer");
@@ -71,7 +85,7 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
       askQuestionButton.disabled = true;
     }
 
-    // todo: do something if this isn't set
+    // TODO: do something if this isn't set
     const csrf_token = document?.querySelector("meta[name='csrf-token']")?.getAttribute("content") || "no_csrf";
     const requestOptions: RequestInit = {
       method: "POST",
@@ -103,7 +117,7 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
           <button type="submit" id="ask-button" ref={askQuestionButtonRef}>
             Ask question
           </button>
-          <button id="lucky-button" style={{ background: "#eee", borderColor: "#eee", color: "#444" }}>
+          <button id="lucky-button" style={{ background: "#eee", borderColor: "#eee", color: "#444" }} onClick={handleLuckyButtonClick}>
             I'm feeling lucky
           </button>
         </div>
