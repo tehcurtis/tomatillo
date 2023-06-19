@@ -10,21 +10,24 @@ interface FormProps {
 // fns
 const randomInteger = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-const showText = (selector: string, text: string, index: number) => {
-  const element = document.querySelector(selector);
-  if (element && index < text.length) {
-    const interval = randomInteger(30, 70);
-    element.innerHTML += text[index];
-    setTimeout(() => showText(selector, text, index + 1), interval);
-  }
-};
-
 const QuestionForm = ({ defaultQuestion }: FormProps) => {
   const questionRef = useRef<HTMLTextAreaElement>(null);
   const askQuestionButtonRef = useRef<HTMLButtonElement>(null);
 
   const [showButtonsContainer, setShowButtonsContainer] = React.useState(true)
   const [answer, setAnswer] = React.useState(null)
+  const [showAskAnotherButton, setShowAskAnotherButton] = React.useState(false)
+
+  const showText = (selector: string, text: string, index: number) => {
+    const element = document.querySelector(selector);
+    if (element && index < text.length) {
+      const interval = randomInteger(30, 70);
+      element.innerHTML += text[index];
+      setTimeout(() => showText(selector, text, index + 1), interval);
+    } else {
+      setShowAskAnotherButton(true);
+    }
+  };
 
   const handleLuckyButtonClick = () => {
     var options = [
@@ -39,6 +42,15 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
       questionElement.value = options[random];
     };
   }
+
+  const handleAskAnotherButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setAnswer(null);
+    setShowButtonsContainer(true);
+    setShowAskAnotherButton(false);
+
+    questionRef.current?.select();
+  };
 
   useEffect(() => {
     if (answer !== null) {
@@ -109,7 +121,7 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
       <p id="answer-container" className={`hidden${answer !== null ? ' showing' : ''}`}>
         <strong>Answer: </strong>
         <span id="answer">{ answer !== null ? answer : '\u00A0' }</span>
-        <button id="ask-another-button" style={{ display: answer !== null ? 'block' : 'none' }}>
+        <button id="ask-another-button" style={{ display: showAskAnotherButton === true ? 'block' : 'none' }} onClick={handleAskAnotherButtonClick}>
           Ask another question
         </button>
       </p>
