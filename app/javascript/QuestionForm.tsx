@@ -14,9 +14,10 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
   const questionRef = useRef<HTMLTextAreaElement>(null);
   const askQuestionButtonRef = useRef<HTMLButtonElement>(null);
 
-  const [showButtonsContainer, setShowButtonsContainer] = React.useState(true)
-  const [answer, setAnswer] = React.useState(null)
-  const [showAskAnotherButton, setShowAskAnotherButton] = React.useState(false)
+  const [showButtonsContainer, setShowButtonsContainer] = React.useState(true);
+  const [answer, setAnswer] = React.useState(null);
+  const [showAskAnotherButton, setShowAskAnotherButton] = React.useState(false);
+  const [questionId, setQuestionId] = React.useState(false);
 
   const showText = (selector: string, text: string, index: number) => {
     const element = document.querySelector(selector);
@@ -25,6 +26,7 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
       element.innerHTML += text[index];
       setTimeout(() => showText(selector, text, index + 1), interval);
     } else {
+      history.pushState({}, "", "/question/" + questionId);
       setShowAskAnotherButton(true);
     }
   };
@@ -94,6 +96,7 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
     fetch("/questions/", requestOptions).then(response => response.json()).then(json => {
       setShowButtonsContainer(false);
       setAnswer(json.question.answer);
+      setQuestionId(json.question.id);
     });
   };
 
