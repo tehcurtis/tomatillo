@@ -3,4 +3,5 @@ import FormContainer from './FormContainer';
 
 const container = document.getElementById("CompContainer")!;
 const root = createRoot(container);
-root.render(<FormContainer />);
+
+root.render(<FormContainer viewingQuestion={window.viewingQuestion} />);

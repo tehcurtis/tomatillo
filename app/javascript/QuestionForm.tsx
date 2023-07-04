@@ -1,16 +1,19 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
+import { Question } from "./types";
 
 // interfaces
 
 interface FormProps {
   defaultQuestion: string;
+  viewingQuestion?: Question;
 }
 
 // fns
 const randomInteger = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+const isBlank = (thing) => thing === null || thing === undefined;
 
-const QuestionForm = ({ defaultQuestion }: FormProps) => {
+const QuestionForm = ({ defaultQuestion, viewingQuestion }: FormProps) => {
   const questionRef = useRef<HTMLTextAreaElement>(null);
   const askQuestionButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -55,8 +58,15 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
   };
 
   useEffect(() => {
+    const answerElement = document.querySelector("#answer");
+
+    if (!isBlank(viewingQuestion) && isBlank(answer)) {
+      answerElement.innerHtml = viewingQuestion.answer;
+      setShowButtonsContainer(false);
+      setShowAskAnotherButton(true);
+    }
+
     if (answer !== null) {
-      const answerElement = document.querySelector("#answer");
       if (answerElement) {
         answerElement.innerHTML = "";
         setTimeout(() => {
@@ -106,7 +116,7 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
         id="question"
         ref={questionRef}
         name="question"
-        defaultValue={ defaultQuestion }
+        defaultValue={ defaultQuestion || viewingQuestion?.question }
       />
 
       { showButtonsContainer ?
@@ -121,9 +131,12 @@ const QuestionForm = ({ defaultQuestion }: FormProps) => {
        : null
       }
 
-      <p id="answer-container" className={`hidden${answer !== null ? ' showing' : ''}`}>
+      <p id="answer-container" className={`hidden${answer !== null || !isBlank(viewingQuestion) ? ' showing' : ''}`}>
         <strong>Answer: </strong>
-        <span id="answer">{ answer !== null ? answer : '\u00A0' }</span>
+        <span id="answer">
+          { answer ?? '\u00A0' }
+          { viewingQuestion?.answer ?? ''}
+        </span>
         <button id="ask-another-button" style={{ display: showAskAnotherButton === true ? 'block' : 'none' }} onClick={handleAskAnotherButtonClick}>
           Ask another question
         </button>

@@ -51,6 +51,10 @@ class QuestionsController < ApplicationController
     render json: question_presenter(question)
   end
 
+  def show
+    @question = Question.find(params[:id])
+  end
+
   private
 
   def question_presenter(question)
