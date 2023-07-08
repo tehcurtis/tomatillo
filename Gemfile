@@ -49,7 +49,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem "foreman", "~> 0.87.2"
-gem "poppler", "~> 4.1.2"
+gem "poppler", "~> 4.1.8"
 gem "tokenizers", "~> 0.3.3"
 gem "ruby-openai", "~> 4.0.0"
 gem "numpy", "~> 0.4.0"
