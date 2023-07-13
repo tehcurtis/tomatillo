@@ -268,7 +268,6 @@ DEPENDENCIES
   capybara
   debug
   foreman (~> 0.87.2)
-  gobject-introspection
   httparty (~> 0.21.0)
   jbuilder
   jsbundling-rails
