@@ -5,15 +5,15 @@ import { Question } from "./types";
 // interfaces
 
 interface FormProps {
-  defaultQuestion: string;
+  defaultQuestionStr: string;
   viewingQuestion?: Question;
 }
 
 // fns
 const randomInteger = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
-const isBlank = (thing) => thing === null || thing === undefined;
+const isBlank = (thing: string | Question | null | undefined) => thing === null || thing === undefined;
 
-const QuestionForm = ({ defaultQuestion, viewingQuestion }: FormProps) => {
+const QuestionForm = ({ defaultQuestionStr, viewingQuestion }: FormProps) => {
   const questionRef = useRef<HTMLTextAreaElement>(null);
   const askQuestionButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -48,7 +48,7 @@ const QuestionForm = ({ defaultQuestion, viewingQuestion }: FormProps) => {
     };
   }
 
-  const handleAskAnotherButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleAskAnotherButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setAnswer(null);
     setShowButtonsContainer(true);
@@ -61,7 +61,9 @@ const QuestionForm = ({ defaultQuestion, viewingQuestion }: FormProps) => {
     const answerElement = document.querySelector("#answer");
 
     if (!isBlank(viewingQuestion) && isBlank(answer)) {
-      answerElement.innerHtml = viewingQuestion.answer;
+      if (answerElement && viewingQuestion) {
+        answerElement.innerHTML = viewingQuestion.answer;
+      }
       setShowButtonsContainer(false);
       setShowAskAnotherButton(true);
     }
@@ -76,7 +78,7 @@ const QuestionForm = ({ defaultQuestion, viewingQuestion }: FormProps) => {
     }
   }, [answer]);
 
-  const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const currentQuestionText = questionRef.current?.value;
@@ -116,7 +118,7 @@ const QuestionForm = ({ defaultQuestion, viewingQuestion }: FormProps) => {
         id="question"
         ref={questionRef}
         name="question"
-        defaultValue={ defaultQuestion || viewingQuestion?.question }
+        defaultValue={ defaultQuestionStr || viewingQuestion?.question }
       />
 
       { showButtonsContainer ?

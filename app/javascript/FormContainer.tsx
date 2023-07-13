@@ -5,10 +5,10 @@ import QuestionForm from './QuestionForm';
 
 type FormContainerProps = {
   viewingQuestion?: Question;
-  defaultQuestionStr:  "What is The Minimalist Entrepreneur about?";
+  defaultQuestionStr?: string;
 };
 
-const FormContainer = ({ defaultQuestionStr, viewingQuestion }: FormContainerProps) => {
+const FormContainer = ({ defaultQuestionStr="What is The Minimalist Entrepreneur about?", viewingQuestion }: FormContainerProps) => {
 
   return (
     <>
