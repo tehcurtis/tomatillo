@@ -1,3 +1,5 @@
+return unless RUBY_PLATFORM == 'arm64-darwin22'
+
 require "poppler"
 require "tokenizers"
 require "openai"
