@@ -1,24 +1,34 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## steps to get this up and running:
+- install asdf (for ruby and node)
+- install ruby 3.2.2
+- install node 19.7
+- install yarn
+- run a yarn install
+- run a bundle install
+- check to make sure tests pass
+  - `yarn test` for the js tests
+  - `rspec` for the backend tests
 
-Things you may want to cover:
+You can run the server locally and include the necessary env vars with something like this:
 
-* Ruby version
+OPENAI_API_KEY='YOUR_KEY' \
+RESEMBLE_VOICE_UUID='YOUR_UUID' \
+RESEMBLE_PROJECT_UUID='YOUR_UUID' \
+RESEMBLE_API_KEY='YOUR_KEY' \
+LOCAL_DATA_FILENAME="some-pdf.pdf.output.csv" \
+bin/rails server
 
-* System dependencies
+You can run the frontend with something like this:
 
-* Configuration
+yarn build --watch
 
-* Database creation
+Or you can run them both via foreman like do:
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+OPENAI_API_KEY='YOUR_KEY' \
+RESEMBLE_VOICE_UUID='YOUR_UUID' \
+RESEMBLE_PROJECT_UUID='YOUR_UUID' \
+RESEMBLE_API_KEY='YOUR_KEY' \
+LOCAL_DATA_FILENAME="some-pdf.pdf.output.csv" \
+foreman start -f Procfile.dev
