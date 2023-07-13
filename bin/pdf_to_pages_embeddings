@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+#
+return unless RUBY_PLATFORM == 'arm64-darwin22'
+
 require "rubygems"
 require "optparse"
 require_relative "../lib/utils/csv_writer"
