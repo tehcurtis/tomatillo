@@ -4,7 +4,7 @@ import React from "react";
 import QuestionForm from "./QuestionForm";
 
 test("renders with default question", () => {
-  const defaultQuestion = "What is The Minimalist Entrepreneur about?";
-  render(<QuestionForm defaultQuestion={defaultQuestion} />);
-  expect(screen.getByDisplayValue(defaultQuestion)).toBeInTheDocument();
+  const defaultQuestionStr = "What is The Minimalist Entrepreneur about?";
+  render(<QuestionForm defaultQuestionStr={defaultQuestionStr} />);
+  expect(screen.getByDisplayValue(defaultQuestionStr)).toBeInTheDocument();
 });
