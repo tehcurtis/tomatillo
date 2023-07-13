@@ -17,10 +17,10 @@ const QuestionForm = ({ defaultQuestion, viewingQuestion }: FormProps) => {
   const questionRef = useRef<HTMLTextAreaElement>(null);
   const askQuestionButtonRef = useRef<HTMLButtonElement>(null);
 
-  const [showButtonsContainer, setShowButtonsContainer] = React.useState(true);
-  const [answer, setAnswer] = React.useState(null);
-  const [showAskAnotherButton, setShowAskAnotherButton] = React.useState(false);
-  const [questionId, setQuestionId] = React.useState(false);
+  const [showButtonsContainer, setShowButtonsContainer] = useState(true);
+  const [answer, setAnswer] = useState(null);
+  const [showAskAnotherButton, setShowAskAnotherButton] = useState(false);
+  const [questionId, setQuestionId] = useState(false);
 
   const showText = (selector: string, text: string, index: number) => {
     const element = document.querySelector(selector);
@@ -48,7 +48,7 @@ const QuestionForm = ({ defaultQuestion, viewingQuestion }: FormProps) => {
     };
   }
 
-  const handleAskAnotherButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleAskAnotherButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setAnswer(null);
     setShowButtonsContainer(true);
@@ -76,7 +76,7 @@ const QuestionForm = ({ defaultQuestion, viewingQuestion }: FormProps) => {
     }
   }, [answer]);
 
-  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const currentQuestionText = questionRef.current?.value;
