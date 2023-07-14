@@ -32,3 +32,6 @@ RESEMBLE_PROJECT_UUID='YOUR_UUID' \
 RESEMBLE_API_KEY='YOUR_KEY' \
 LOCAL_DATA_FILENAME="some-pdf.pdf.output.csv" \
 foreman start -f Procfile.dev
+
+This is the command to run the pdf_to_pages_embeddings script:
+OPENAI_API_KEY='sk-YOUR-KEY' ./bin/pdf_to_pages_embeddings -p some-filename.pdf
